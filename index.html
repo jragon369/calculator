@@ -1,16 +1,16 @@
-<!DOCTYPE html>
+<li style="color: #ff6b6b; font-weight: bold;">BTC Appreciation Split: 50% to rewards, 50% to treasury</li>                    <li style="color: #ff6b6b; font-weight: bold;">Network Revenue Split: 60% to rewards, 40% to treasury</li><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kilo Protocol - Economic Calculator v8</title>
+    <title>Kilo Protocol - Economic Calculator v13</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-       
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #0a0a0a;
@@ -19,12 +19,12 @@
             padding: 2rem;
             min-height: 100vh;
         }
-       
+
         .main-container {
             max-width: 1100px;
             margin: 0 auto;
         }
-       
+
         .calculator-section {
             background: #111111;
             border-radius: 20px;
@@ -33,71 +33,67 @@
             border: 1px solid #222;
             margin-bottom: 2rem;
         }
-       
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            background: linear-gradient(135deg, #f7931a 0%, #ffb84d 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
-        }
-       
+
         h2 {
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
-            color: #f7931a;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            margin-top: 2rem;
+            color: #ffffff;
             text-align: center;
         }
-       
+
+        h2.first-section {
+            margin-top: 1rem;
+        }
+
         .grid {
             display: flex;
             flex-direction: column;
-            gap: 3rem;
+            gap: 1rem;
         }
-       
+
         .inputs-section {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
-       
+
         .outputs-section {
-            background: #1a1a1a;
-            padding: 2.5rem;
-            border-radius: 12px;
-            border: 1px solid #333;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-       
-        .input-group {
             background: #1a1a1a;
             padding: 1.5rem;
             border-radius: 12px;
             border: 1px solid #333;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
-       
+
+        .input-group {
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+
         .input-group.full-width {
             grid-column: 1 / -1;
             max-width: 400px;
             margin: 0 auto;
         }
-       
+
         label {
             display: block;
             margin-bottom: 0.5rem;
             color: #ccc;
             font-size: 0.9rem;
         }
-       
+
         .input-wrapper {
             position: relative;
         }
-       
+
         input[type="range"] {
             width: 100%;
             height: 8px;
@@ -107,35 +103,35 @@
             -webkit-appearance: none;
             margin: 1rem 0;
         }
-       
+
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 20px;
             height: 20px;
-            background: #f7931a;
+            background: #8B0000;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.2s;
         }
-       
+
         input[type="range"]::-webkit-slider-thumb:hover {
             transform: scale(1.2);
-            background: #ffb84d;
+            background: #A52A2A;
         }
-       
+
         .input-value {
-            font-size: 1.4rem;
+            font-size: 1rem;
             font-weight: bold;
-            color: #f7931a;
+            color: #8B0000;
             margin-top: 0.5rem;
         }
-       
+
         .time-selector {
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
         }
-       
+
         .time-btn {
             flex: 1;
             padding: 0.8rem;
@@ -147,29 +143,29 @@
             transition: all 0.2s;
             font-size: 1rem;
         }
-       
+
         .time-btn:hover {
             background: #333;
-            border-color: #f7931a;
+            border-color: #8B0000;
         }
-       
+
         .time-btn.active {
-            background: #f7931a;
-            color: #000;
+            background: #8B0000;
+            color: #fff;
             font-weight: bold;
-            border-color: #f7931a;
+            border-color: #8B0000;
         }
-       
+
         .output-item {
             text-align: center;
             border-right: 1px solid #333;
-            padding: 0 2rem;
+            padding: 0 1rem;
         }
-       
+
         .output-item:last-child {
             border-right: none;
         }
-       
+
         .output-label {
             color: #888;
             font-size: 0.8rem;
@@ -177,14 +173,14 @@
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
-       
+
         .output-value {
-            font-size: 2.5rem;
+            font-size: 1.25rem;
             font-weight: bold;
             color: #fff;
             margin-bottom: 0.3rem;
         }
-       
+
         .assumptions-section {
             background: #1a1a1a;
             padding: 2rem;
@@ -192,56 +188,57 @@
             border: 1px solid #333;
             margin-top: 2rem;
         }
-       
+
         .assumptions-section h3 {
-            color: #f7931a;
-            font-size: 1.2rem;
+            color: #8B0000;
+            font-size: 1rem;
             margin-bottom: 1rem;
             text-align: center;
         }
-       
+
         .assumptions-section ul {
             list-style: none;
             padding: 0;
             columns: 2;
             column-gap: 2rem;
         }
-       
+
         .assumptions-section li {
             color: #aaa;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             margin-bottom: 0.5rem;
             break-inside: avoid;
         }
-       
+
+        .fee-change {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
         @media (max-width: 768px) {
             .inputs-section {
                 grid-template-columns: 1fr;
             }
-           
+
             .outputs-section {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
-           
+
             .output-item {
                 border-right: none;
                 border-bottom: 1px solid #333;
                 padding: 1.5rem 0;
             }
-           
+
             .output-item:last-child {
                 border-bottom: none;
             }
-           
+
             .calculator-section {
                 padding: 2rem;
             }
-           
-            h1 {
-                font-size: 2rem;
-            }
-           
+
             .assumptions-section ul {
                 columns: 1;
             }
@@ -251,8 +248,6 @@
 <body>
     <div class="main-container">
         <div class="calculator-section">
-            <h1>KILO PROTOCOL</h1>
-           
             <div class="grid">
                 <div class="inputs-section">
                     <div class="input-group">
@@ -262,60 +257,24 @@
                             <div class="input-value" id="btcValue">60%</div>
                         </div>
                     </div>
-                   
+
                     <div class="input-group">
                         <label for="athletesPerMonth">NEW ATHLETES PER MONTH</label>
                         <div class="input-wrapper">
-                            <input type="range" id="athletesPerMonth" min="1000" max="20000" value="5000" step="1000">
+                            <input type="range" id="athletesPerMonth" min="1000" max="9000" value="5000" step="1000">
                             <div class="input-value" id="athletesValue">5,000</div>
                         </div>
                     </div>
-                   
+
                     <div class="input-group">
                         <label for="collectivesPerMonth">NEW COLLECTIVES PER MONTH</label>
                         <div class="input-wrapper">
-                            <input type="range" id="collectivesPerMonth" min="1" max="10" value="2" step="1">
+                            <input type="range" id="collectivesPerMonth" min="1" max="9" value="2" step="1">
                             <div class="input-value" id="collectivesValue">2</div>
                         </div>
                     </div>
                 </div>
-               
-                <h2>COLLECTIVE METRICS</h2>
-                <div class="outputs-section">
-                    <div class="output-item">
-                        <div class="output-label">Collective Treasury</div>
-                        <div class="output-value" id="treasuryOutput">$12M</div>
-                    </div>
-                   
-                    <div class="output-item">
-                        <div class="output-label">Collective Annual Revenue</div>
-                        <div class="output-value" id="collectiveRevenueOutput">$750K</div>
-                    </div>
-                   
-                    <div class="output-item">
-                        <div class="output-label">Kilo Per Win</div>
-                        <div class="output-value" id="kiloOutput">50</div>
-                    </div>
-                </div>
-               
-                <h2>NETWORK METRICS</h2>
-                <div class="outputs-section">
-                    <div class="output-item">
-                        <div class="output-label">Network Treasury</div>
-                        <div class="output-value" id="networkTreasuryOutput">150 BTC</div>
-                    </div>
-                   
-                    <div class="output-item">
-                        <div class="output-label">Staking Yield</div>
-                        <div class="output-value" id="stakingYield">12%</div>
-                    </div>
-                   
-                    <div class="output-item">
-                        <div class="output-label">Network Annual Revenue</div>
-                        <div class="output-value" id="networkRevenue">$4.3M</div>
-                    </div>
-                </div>
-               
+
                 <div class="input-group full-width">
                     <label for="timeframe">HORIZON (YEARS)</label>
                     <div class="time-selector">
@@ -325,43 +284,68 @@
                         <button class="time-btn" onclick="setTimeframe(9, this)">9</button>
                     </div>
                 </div>
+
+                <h2 class="first-section">AVATAR</h2>
+                <div class="outputs-section">
+                    <div class="output-item">
+                        <div class="output-label">KILO Per Win</div>
+                        <div class="output-value" id="kiloOutput">50</div>
+                    </div>
+
+                    <div class="output-item">
+                        <div class="output-label">Avatar Value</div>
+                        <div class="output-value" id="avatarValue">$1.5K</div>
+                    </div>
+                </div>
+
+                <h2>COLLECTIVES</h2>
+                <div class="outputs-section">
+                    <div class="output-item">
+                        <div class="output-label">Treasury (BTC)</div>
+                        <div class="output-value" id="treasuryOutput">120 BTC</div>
+                    </div>
+
+                    <div class="output-item">
+                        <div class="output-label">Annual Revenue</div>
+                        <div class="output-value" id="collectiveRevenueOutput">$750K</div>
+                    </div>
+                </div>
+
+                <h2>NETWORK</h2>
+                <div class="outputs-section">
+                    <div class="output-item">
+                        <div class="output-label">Treasury (BTC)</div>
+                        <div class="output-value" id="networkTreasuryOutput">150 BTC</div>
+                    </div>
+
+                    <div class="output-item">
+                        <div class="output-label">Annual Revenue</div>
+                        <div class="output-value" id="networkRevenue">$4.3M</div>
+                    </div>
+                </div>
             </div>
-           
+
             <div class="assumptions-section">
-                <h3>Key Model Assumptions</h3>
+                <h3>Model Assumptions</h3>
                 <ul>
                     <li>Initial BTC Price: $100,000</li>
                     <li>Network Treasury Start: 100 BTC</li>
+                    <li>Base Athlete Earnings: $750/year</li>
+                    <li>Avatar Value: 2x athlete annual earnings</li>
+                    <li>Earnings Growth: Network effects + growth velocity</li>
                     <li>Avatars per Collective: 1,000 (capped)</li>
-                    <li>Avatar Price: $3,000 (fixed)</li>
-                    <li>Avatar Sales Revenue: $3,000,000</li>
-                    <li>Collective Share of Avatar Sales: 88%</li>
-                    <li>Network Avatar Fee: 12%</li>
-                    <li>Monthly Subscription: $9/athlete</li>
-                    <li>Athlete Content Revenue: $1,000/year average</li>
-                    <li>Collective Revenue Share: 15% of athlete content</li>
-                    <li>Network Content Fee: 10%</li>
-                    <li>Clone Revenue: $1,000/avatar/year</li>
-                    <li>Network Clone Fee: 12%</li>
-                    <li>Post Rate: 15% of athletes compete daily</li>
-                    <li>Win Rate: 1% of posts win</li>
-                    <li>Competition Tokens: 9 KILO/month/athlete (including on joining)</li>
-                    <li>Conversion Rate: 30% annually</li>
-                    <li>Conversion Burn: 97% (3% network fee)</li>
-                    <li>Resale Rate: 10% annually</li>
-                    <li>Resale Fee: 3% to network</li>
-                    <li>Revenue to Prizes: 60%</li>
-                    <li>Appreciation to Prizes: 30%</li>
-                    <li>Revenue to Staking: 30%</li>
-                    <li>Staking Participation: 30%</li>
-                    <li>Staking Yield Cap: 21%</li>
+                    <li>Network Subscription: $9/month per athlete</li>
+                    <li>Collective Fee: 12% of athlete revenues</li>
+                    <li>Daily Winners: 0.1% of total athletes</li>
+                    <li>Utility Tokens: 9 kilo/month/athlete (locked, non-liquid)</li>
+                    <li>KILO Rewards: Distributed from rewards pool (liquid)</li>
+                    <li>KILO Conversion Rate: 15% annually (vibrant utility ecosystem)</li>
                     <li>KILO to Satoshi: 1 KILO = 1,000 satoshi</li>
                     <li>Satoshi per BTC: 100,000,000</li>
                     <li>Circulating Supply Floor: 10% of total minted</li>
                 </ul>
-                <p style="color: #666; font-size: 0.85rem; margin-top: 1rem;">
-                    Note: This model excludes token speculation, betting markets, AI data licensing,
-                    premium subscriptions, physical venues, and other potential revenue streams.
+                <p style="color: #666; font-size: 0.7rem; margin-top: 1rem;">
+                    Note: The $9/month network subscription drives consistent revenue. Avatar value grows conservatively with network effects.
                 </p>
             </div>
         </div>
@@ -373,7 +357,7 @@
         let athletesPerMonth = 5000;
         let collectivesPerMonth = 2;
         let timeframe = 1;
-       
+
         // Format currency
         function formatCurrency(value) {
             if (value >= 1000000000) {
@@ -386,7 +370,7 @@
                 return '$' + Math.round(value).toLocaleString();
             }
         }
-       
+
         // Format BTC
         function formatBTC(btc) {
             if (btc >= 1000) {
@@ -395,26 +379,54 @@
                 return btc.toFixed(0) + ' BTC';
             }
         }
-       
+
+        // Calculate athlete earnings with network effects and growth velocity
+        function calculateAthleteEarnings(totalAthletes, totalCollectives, timeInMonths) {
+            const baseEarnings = 750; // Base $750/year
+            
+            // Use the global variables directly for growth rates
+            const monthlyAthleteGrowth = athletesPerMonth;
+            const monthlyCollectiveGrowth = collectivesPerMonth;
+            
+            // Factor 1: Network size effect (more athletes = more opportunities)
+            const athleteEffect = Math.pow(Math.max(totalAthletes / 1000, 1), 0.4);
+            
+            // Factor 2: Collective growth effect (more collectives = more competition/prizes)
+            const collectiveEffect = Math.pow(Math.max(totalCollectives / 10, 1), 0.5);
+            
+            // Factor 3: Time maturity effect (network matures over time)
+            const timeEffect = Math.pow(Math.max(timeInMonths / 12, 1), 0.3);
+            
+            // Factor 4: Growth velocity effect - THIS IS THE KEY
+            // Velocity multiplier: faster growth = higher value
+            const athleteVelocity = Math.pow(Math.max(monthlyAthleteGrowth / 1000, 1), 0.35);
+            const collectiveVelocity = Math.pow(Math.max(monthlyCollectiveGrowth, 1), 0.4);
+            
+            // Combined multiplier includes velocity
+            const combinedMultiplier = athleteEffect * collectiveEffect * timeEffect * athleteVelocity * collectiveVelocity;
+            
+            return baseEarnings * Math.min(combinedMultiplier, 100);
+        }
+
         // Update display values
         document.getElementById('btcCAGR').addEventListener('input', function() {
             currentBTC = parseInt(this.value);
             document.getElementById('btcValue').textContent = currentBTC + '%';
             calculateAllMetrics();
         });
-       
+
         document.getElementById('athletesPerMonth').addEventListener('input', function() {
             athletesPerMonth = parseInt(this.value);
             document.getElementById('athletesValue').textContent = athletesPerMonth.toLocaleString();
             calculateAllMetrics();
         });
-       
+
         document.getElementById('collectivesPerMonth').addEventListener('input', function() {
             collectivesPerMonth = parseInt(this.value);
             document.getElementById('collectivesValue').textContent = collectivesPerMonth;
             calculateAllMetrics();
         });
-       
+
         function setTimeframe(years, element) {
             timeframe = years;
             document.querySelectorAll('.time-btn').forEach(btn => {
@@ -425,10 +437,10 @@
             }
             calculateAllMetrics();
         }
-       
-        // Main calculation function - complete rewrite for accuracy
+
+        // Main calculation function - using sophisticated month-by-month simulation
         function calculateAllMetrics() {
-            // Model Parameters (all in one place for transparency)
+            // Model Parameters
             const params = {
                 btcCAGR: currentBTC / 100,
                 years: timeframe,
@@ -436,33 +448,23 @@
                 initialBTCPrice: 100000,
                 networkTreasuryStartBTC: 100,
                 avatarsPerCollective: 1000,
-                avatarPrice: 3000,
-                avatarSalesRevenue: 3000000,
-                networkAvatarCut: 0.12,
+                collectiveAvatarShare: 0.88,
+                networkAvatarShare: 0.12,
                 monthlySubscriptionFee: 9,
-                athleteContentRevenue: 1000,
-                collectiveContentShare: 0.15,
-                networkContentShare: 0.10,
-                cloneRevenuePerAvatar: 1000,
-                networkCloneShare: 0.12,
-                conversionRate: 0.30,
-                conversionFeeRate: 0.03,
-                resaleRate: 0.10,
-                resaleFeeRate: 0.03,
-                postRate: 0.15,
-                winRate: 0.01,
+                collectiveRevenueShare: 0.12, // 12% of athlete revenues (all goes to collective)
+                networkRevenueShare: 0, // 0% of athlete revenues (network gets subscription only)
+                dailyWinRate: 0.001, // 0.1% of athletes win daily
                 competitionTokensPerMonth: 9,
-                initialKiloPerAthlete: 30,
-                revenueToPrizes: 0.60,
-                appreciationToPrizes: 0.30,
-                revenueToStaking: 0.30,
-                stakingParticipation: 0.30,
-                stakingYieldCap: 0.21,
+                conversionRate: 0.15, // 15% annually (vibrant utility ecosystem)
+                conversionBurnRate: 0.97, // 97% burned, 3% to network
+                revenueToRewards: 0.60, // 60% to rewards pool
+                revenueToTreasury: 0.30, // 30% to BTC treasury
+                revenueToOperations: 0.10, // 10% to operations
                 kiloToSatoshi: 1000,
                 satoshiPerBTC: 100000000,
                 circulatingFloor: 0.10
             };
-           
+
             // Initialize state tracking
             const state = {
                 collectives: [],
@@ -471,239 +473,183 @@
                 totalKiloBurned: 0,
                 monthlyData: []
             };
-           
+
             // Main simulation loop - month by month
             for (let month = 1; month <= params.months; month++) {
                 // Calculate BTC prices for this month
                 const btcPriceStart = params.initialBTCPrice * Math.pow(1 + params.btcCAGR, (month - 1) / 12);
                 const btcPriceEnd = params.initialBTCPrice * Math.pow(1 + params.btcCAGR, month / 12);
                 const btcPriceAvg = (btcPriceStart + btcPriceEnd) / 2;
-               
+
+                // Update all collectives - add new athletes first
+                let totalActiveAthletes = 0;
+                state.collectives.forEach(collective => {
+                    if (month >= collective.launchMonth) {
+                        // Add new athletes this month
+                        collective.athletes = Math.min(collective.athletes + athletesPerMonth, params.avatarsPerCollective);
+                    }
+                    totalActiveAthletes += collective.athletes;
+                });
+
+                // Calculate current athlete earnings based on network size and growth velocity
+                const currentAthleteEarnings = calculateAthleteEarnings(
+                    totalActiveAthletes, 
+                    state.collectives.length,
+                    month
+                );
+                const currentAvatarValue = currentAthleteEarnings * 2; // Avatar = 2x annual earnings
+
                 // Launch new collectives this month
                 for (let i = 0; i < collectivesPerMonth; i++) {
+                    const avatarSalesRevenue = currentAvatarValue * params.avatarsPerCollective;
+                    
                     const newCollective = {
                         id: state.collectives.length + 1,
                         launchMonth: month,
                         athletes: 0,
-                        treasuryBTC: (params.avatarSalesRevenue * (1 - params.networkAvatarCut)) / btcPriceAvg
+                        avatarValue: currentAvatarValue,
+                        treasuryBTC: (avatarSalesRevenue * params.collectiveAvatarShare) / btcPriceAvg
                     };
                     state.collectives.push(newCollective);
-                   
-                    // Network receives avatar sale fees
-                    state.networkTreasuryBTC += (params.avatarSalesRevenue * params.networkAvatarCut) / btcPriceAvg;
+
+                    // Network receives avatar sale fees (12%)
+                    state.networkTreasuryBTC += (avatarSalesRevenue * params.networkAvatarShare) / btcPriceAvg;
                 }
-               
-                // Update all collectives - add new athletes
-                let monthlyNewAthletes = 0;
-                let totalActiveAthletes = 0;
-               
-                state.collectives.forEach(collective => {
-                    if (month >= collective.launchMonth) {
-                        // Add new athletes this month
-                        collective.athletes += athletesPerMonth;
-                        monthlyNewAthletes += athletesPerMonth;
-                    }
-                    totalActiveAthletes += collective.athletes;
-                });
-               
+
                 // Calculate network revenue for this month
                 const monthlyNetworkRevenue = calculateMonthlyNetworkRevenue(
+                    totalActiveAthletes,
+                    currentAthleteEarnings,
                     state.collectives,
-                    totalActiveAthletes,
                     btcPriceAvg,
                     params
                 );
-               
-                // Network treasury appreciation and prize distribution
-                const treasuryGrowth = calculateNetworkTreasuryGrowth(
-                    state.networkTreasuryBTC,
-                    btcPriceStart,
-                    btcPriceEnd,
-                    monthlyNetworkRevenue,
-                    params
-                );
-               
-                // Update network treasury
-                state.networkTreasuryBTC = treasuryGrowth.newTreasuryBTC;
-               
-                // KILO supply dynamics
-                const kiloActivity = calculateKiloActivity(
-                    monthlyNewAthletes,
-                    totalActiveAthletes,
-                    monthlyNetworkRevenue.totalConversions,
-                    btcPriceAvg,
-                    params
-                );
-               
-                state.totalKiloSupply += kiloActivity.minted;
-                state.totalKiloBurned += kiloActivity.burned;
-               
+
+                // Process network revenue allocation
+                const rewardsPoolContribution = monthlyNetworkRevenue.total * params.revenueToRewards;
+                const treasuryAdditionUSD = monthlyNetworkRevenue.total * params.revenueToTreasury;
+                const operationsUSD = monthlyNetworkRevenue.total * params.revenueToOperations;
+                const treasuryAdditionBTC = treasuryAdditionUSD / btcPriceAvg;
+
+                // Calculate monthly KILO rewards distributed (from rewards pool)
+                const monthlyKiloDistributed = (rewardsPoolContribution / btcPriceAvg) * params.satoshiPerBTC / params.kiloToSatoshi;
+                
+                // Process conversions from NETWORK treasury (not collective)
+                // 30% of distributed KILO gets converted annually
+                const monthlyConversionRate = params.conversionRate / 12;
+                const kiloConvertedThisMonth = state.totalKiloSupply * monthlyConversionRate;
+                const btcPaidOut = (kiloConvertedThisMonth * params.kiloToSatoshi / params.satoshiPerBTC);
+                
+                // Network treasury pays out BTC for conversions
+                state.networkTreasuryBTC -= btcPaidOut;
+                
+                // 97% of converted KILO gets burned
+                const kiloBurnedFromConversions = kiloConvertedThisMonth * params.conversionBurnRate;
+                
+                // Update network treasury (70% of revenue + BTC from avatar sales - conversion payouts)
+                state.networkTreasuryBTC += treasuryAdditionBTC;
+                
+                // Ensure network treasury doesn't go negative
+                if (state.networkTreasuryBTC < 0) {
+                    state.networkTreasuryBTC = 0;
+                }
+
+                // Track KILO supply (only liquid KILO from rewards, not utility kilo)
+                state.totalKiloSupply += monthlyKiloDistributed;
+                state.totalKiloBurned += kiloBurnedFromConversions;
+
                 // Store monthly data
                 state.monthlyData[month] = {
                     btcPrice: btcPriceEnd,
                     totalCollectives: state.collectives.length,
                     totalAthletes: totalActiveAthletes,
                     networkRevenue: monthlyNetworkRevenue.total,
-                    prizeContribution: treasuryGrowth.prizeContribution,
-                    dailyWinners: totalActiveAthletes * params.postRate * params.winRate
+                    rewardsContribution: rewardsPoolContribution,
+                    dailyWinners: totalActiveAthletes * params.dailyWinRate,
+                    currentAvatarValue: currentAvatarValue,
+                    currentAthleteEarnings: currentAthleteEarnings
                 };
             }
-           
+
             // Calculate final outputs
             const outputs = calculateFinalOutputs(state, params);
-           
+
             // Update UI
             updateDisplay(outputs);
         }
-       
+
         // Calculate monthly network revenue from all sources
-        function calculateMonthlyNetworkRevenue(collectives, totalAthletes, btcPrice, params) {
-            // Subscription revenue (all athletes pay network)
+        function calculateMonthlyNetworkRevenue(totalAthletes, athleteEarnings, collectives, btcPrice, params) {
+            // Primary revenue: $9/month subscription from all athletes
             const subscriptionRevenue = totalAthletes * params.monthlySubscriptionFee;
-           
-            // Clone revenue share
-            const totalAvatars = collectives.length * params.avatarsPerCollective;
-            const cloneRevenue = (totalAvatars * params.cloneRevenuePerAvatar / 12) * params.networkCloneShare;
-           
-            // Athlete content economy share
-            const athleteContentRevenue = (totalAthletes * params.athleteContentRevenue / 12) * params.networkContentShare;
-           
-            // Conversion fees (estimate based on collective treasuries)
-            let totalCollectiveTreasuryBTC = 0;
-            collectives.forEach(c => totalCollectiveTreasuryBTC += c.treasuryBTC);
-            const totalCollectiveTreasuryUSD = totalCollectiveTreasuryBTC * btcPrice;
-            const monthlyConversionVolume = (totalCollectiveTreasuryUSD * params.conversionRate) / 12;
-            const conversionFeeRevenue = monthlyConversionVolume * params.conversionFeeRate;
-           
-            // Resale fees
-            const avgAvatarValue = params.avatarPrice * (btcPrice / params.initialBTCPrice);
-            const monthlyResaleVolume = (totalAvatars * avgAvatarValue * params.resaleRate) / 12;
-            const resaleFeeRevenue = monthlyResaleVolume * params.resaleFeeRate;
-           
+
+            // Network no longer takes a fee from athlete content revenues (all goes to collective)
+
             return {
-                total: subscriptionRevenue + cloneRevenue + athleteContentRevenue + conversionFeeRevenue + resaleFeeRevenue,
-                totalConversions: monthlyConversionVolume
+                total: subscriptionRevenue
             };
         }
-       
-        // Calculate network treasury growth and prize distribution
-        function calculateNetworkTreasuryGrowth(treasuryBTC, btcPriceStart, btcPriceEnd, monthlyRevenue, params) {
-            // Calculate appreciation on existing treasury
-            const treasuryStartValue = treasuryBTC * btcPriceStart;
-            const treasuryEndValue = treasuryBTC * btcPriceEnd;
-            const appreciation = treasuryEndValue - treasuryStartValue;
-           
-            // Distribute appreciation to prizes
-            const appreciationToPrizes = appreciation * params.appreciationToPrizes;
-           
-            // Add monthly revenue to treasury
-            const revenueBTC = monthlyRevenue.total / btcPriceEnd;
-           
-            // Calculate revenue contribution to prizes
-            const revenueToPrizes = monthlyRevenue.total * params.revenueToPrizes;
-           
-            // Deduct prize distributions from treasury
-            const totalPrizesUSD = appreciationToPrizes + revenueToPrizes;
-            const prizesBTC = totalPrizesUSD / btcPriceEnd;
-            const newTreasuryBTC = treasuryBTC + revenueBTC - prizesBTC;
-           
-            return {
-                newTreasuryBTC: newTreasuryBTC,
-                prizeContribution: totalPrizesUSD
-            };
-        }
-       
-        // Calculate KILO minting and burning
-        function calculateKiloActivity(newAthletes, totalAthletes, conversionVolume, btcPrice, params) {
-            // Minting
-            const newAthleteTokens = newAthletes * params.competitionTokensPerMonth; // New athletes get 9 KILO
-            const monthlyCompetitionTokens = totalAthletes * params.competitionTokensPerMonth; // All athletes get 9 KILO monthly
-            const totalMinted = newAthleteTokens + monthlyCompetitionTokens;
-           
-            // Burning
-            const competitionBurns = totalAthletes * params.postRate * params.winRate * 30 * params.competitionTokensPerMonth;
-            const conversionBurns = (conversionVolume / btcPrice * params.satoshiPerBTC / params.kiloToSatoshi) * 0.97;
-            const totalBurned = competitionBurns + conversionBurns;
-           
-            return {
-                minted: totalMinted,
-                burned: totalBurned
-            };
-        }
-       
+
+        // Removed the calculateKiloActivity function - no longer needed
+
         // Calculate final outputs for display
         function calculateFinalOutputs(state, params) {
             const finalMonth = state.monthlyData[params.months];
             const finalBTCPrice = finalMonth.btcPrice;
-           
+
             // Representative collective (oldest)
-            const oldestCollective = state.collectives[0] || { athletes: 0, treasuryBTC: 0 };
-            const collectiveTreasuryUSD = oldestCollective.treasuryBTC * finalBTCPrice;
-           
-            // Collective annual revenue (from athlete content)
-            const athleteRevenue = oldestCollective.athletes * params.athleteContentRevenue;
-            const collectiveAnnualRevenue = athleteRevenue * params.collectiveContentShare;
-           
-            // Calculate total prize pool
-            let totalPrizePool = 0;
-            for (let i = 1; i <= params.months; i++) {
-                totalPrizePool += state.monthlyData[i].prizeContribution;
-            }
-           
-            // Calculate KILO per win using final month run rate for better accuracy
-            const finalMonthData = state.monthlyData[params.months];
-            const finalMonthPrizePool = finalMonthData.prizeContribution;
-            const annualizedPrizePool = finalMonthPrizePool * 12;
-            const dailyPrizePoolUSD = annualizedPrizePool / 365;
-            const dailyPrizePoolBTC = dailyPrizePoolUSD / finalBTCPrice;
-            const dailyPrizePoolSatoshi = dailyPrizePoolBTC * params.satoshiPerBTC;
-            const finalDailyWinners = finalMonthData.dailyWinners;
-            const kiloPerWin = finalDailyWinners > 0 ? Math.floor(dailyPrizePoolSatoshi / finalDailyWinners / params.kiloToSatoshi) : 0;
-           
+            const oldestCollective = state.collectives[0] || { 
+                athletes: 0, 
+                treasuryBTC: 0, 
+                avatarValue: 1500 
+            };
+            
+            // Collective treasury in BTC (after conversions)
+            const collectiveTreasuryBTC = oldestCollective.treasuryBTC;
+
+            // Collective annual revenue (12% of athlete revenues)
+            const collectiveAthletes = oldestCollective.athletes;
+            const athleteRevenue = collectiveAthletes * finalMonth.currentAthleteEarnings;
+            const collectiveAnnualRevenue = athleteRevenue * params.collectiveRevenueShare;
+
+            // Calculate KILO per win based on rewards pool
+            const finalMonthRewardsPool = finalMonth.rewardsContribution;
+            const annualizedRewardsPool = finalMonthRewardsPool * 12;
+            const dailyRewardsPoolUSD = annualizedRewardsPool / 365;
+            const dailyRewardsPoolBTC = dailyRewardsPoolUSD / finalBTCPrice;
+            const dailyRewardsPoolSatoshi = dailyRewardsPoolBTC * params.satoshiPerBTC;
+            const finalDailyWinners = finalMonth.dailyWinners;
+            const kiloPerWin = finalDailyWinners > 0 ? 
+                Math.floor(dailyRewardsPoolSatoshi / finalDailyWinners / params.kiloToSatoshi) : 0;
+
+            // Latest avatar value
+            const latestAvatarValue = finalMonth.currentAvatarValue;
+
             // Network metrics
             const networkTreasuryUSD = state.networkTreasuryBTC * finalBTCPrice;
-            const annualNetworkRevenue = finalMonth.networkRevenue * 12; // Run rate
-           
-            // Staking yield calculation using average BTC price
-            const circulatingSupply = Math.max(
-                state.totalKiloSupply - state.totalKiloBurned,
-                state.totalKiloSupply * params.circulatingFloor
-            );
-            const stakedKilo = circulatingSupply * params.stakingParticipation;
-            const annualStakingRewards = annualNetworkRevenue * params.revenueToStaking;
-           
-            // Calculate average BTC price over period
-            let totalBTCPrice = 0;
-            for (let i = 1; i <= params.months; i++) {
-                totalBTCPrice += state.monthlyData[i].btcPrice;
-            }
-            const avgBTCPrice = totalBTCPrice / params.months;
-           
-            const stakedKiloValueUSD = (stakedKilo * params.kiloToSatoshi / params.satoshiPerBTC) * avgBTCPrice;
-            const stakingYield = stakedKiloValueUSD > 0 ? (annualStakingRewards / stakedKiloValueUSD) : 0.10;
-            const cappedStakingYield = Math.min(params.stakingYieldCap, Math.max(0.05, stakingYield));
-           
+            const annualNetworkRevenue = finalMonth.networkRevenue * 12;
+
             return {
-                collectiveTreasuryUSD: collectiveTreasuryUSD,
+                collectiveTreasuryBTC: collectiveTreasuryBTC,
                 collectiveAnnualRevenue: collectiveAnnualRevenue,
                 kiloPerWin: kiloPerWin,
+                avatarValue: latestAvatarValue,
                 networkTreasuryBTC: state.networkTreasuryBTC,
                 networkTreasuryUSD: networkTreasuryUSD,
-                stakingYield: cappedStakingYield,
                 annualNetworkRevenue: annualNetworkRevenue
             };
         }
-       
+
         // Update the display
         function updateDisplay(outputs) {
-            document.getElementById('treasuryOutput').textContent = formatCurrency(outputs.collectiveTreasuryUSD);
+            document.getElementById('treasuryOutput').textContent = formatBTC(outputs.collectiveTreasuryBTC);
             document.getElementById('collectiveRevenueOutput').textContent = formatCurrency(outputs.collectiveAnnualRevenue);
             document.getElementById('kiloOutput').textContent = outputs.kiloPerWin.toLocaleString();
+            document.getElementById('avatarValue').textContent = formatCurrency(outputs.avatarValue);
             document.getElementById('networkTreasuryOutput').textContent = formatBTC(outputs.networkTreasuryBTC);
-            document.getElementById('stakingYield').textContent = (outputs.stakingYield * 100).toFixed(1) + '%';
             document.getElementById('networkRevenue').textContent = formatCurrency(outputs.annualNetworkRevenue);
         }
-       
+
         // Initial calculation
         calculateAllMetrics();
     </script>
