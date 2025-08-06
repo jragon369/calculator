@@ -397,7 +397,7 @@
             // Combined multiplier includes velocity
             const combinedMultiplier = athleteEffect * collectiveEffect * timeEffect * athleteVelocity * collectiveVelocity;
             
-            return baseEarnings * Math.min(combinedMultiplier, 100);
+            return baseEarnings * Math.min(combinedMultiplier, 1000); // Cap at 1000x for stability
         }
 
         // Update display values
