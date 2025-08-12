@@ -442,8 +442,8 @@
                 collectiveAvatarShare: 0.88,
                 networkAvatarShare: 0.12,
                 monthlySubscriptionFee: 9,
-                collectiveRevenueShare: 0.12, // 12% of athlete revenues (all goes to collective)
-                networkRevenueShare: 0, // 0% of athlete revenues (network gets subscription only)
+                collectiveRevenueShare: 0.09, // 9% of athlete revenues goes to collective
+                networkRevenueShare: 0.03, // 3% of athlete revenues goes to network
                 dailyWinRate: 0.001, // 0.1% of athletes win daily
                 competitionTokensPerMonth: 9,
                 conversionRate: 0.15, // 15% annually (vibrant utility ecosystem)
@@ -574,10 +574,13 @@
             // Primary revenue: $9/month subscription from all athletes
             const subscriptionRevenue = totalAthletes * params.monthlySubscriptionFee;
 
-            // Network no longer takes a fee from athlete content revenues (all goes to collective)
+            // NEW: Network also gets 3% of athlete content revenues
+            const athleteContentRevenue = (totalAthletes * athleteEarnings * params.networkRevenueShare) / 12; // Convert annual to monthly
 
             return {
-                total: subscriptionRevenue
+                total: subscriptionRevenue + athleteContentRevenue,
+                subscription: subscriptionRevenue,
+                revenueShare: athleteContentRevenue
             };
         }
 
@@ -596,7 +599,7 @@
             // Collective treasury in BTC (after conversions)
             const collectiveTreasuryBTC = oldestCollective.treasuryBTC;
 
-            // Collective annual revenue (12% of athlete revenues)
+            // Collective annual revenue (9% of athlete revenues)
             const collectiveAthletes = oldestCollective.athletes;
             const athleteRevenue = collectiveAthletes * finalMonth.currentAthleteEarnings;
             const collectiveAnnualRevenue = athleteRevenue * params.collectiveRevenueShare;
