@@ -26,19 +26,18 @@
         }
 
         .calculator-section {
-            background: #111111;
+            background: #0a0a0a;
             border-radius: 20px;
             padding: 2rem;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            border: 1px solid #222;
             margin-bottom: 1.5rem;
         }
 
         h2 {
             font-size: 1.2rem;
             font-weight: normal;
-            margin-bottom: 0.4rem;
-            margin-top: 1.5rem;
+            margin-bottom: 0.1rem;
+            margin-top: 0.7rem;
             color: #ffffff;
             text-align: center;
         }
@@ -57,18 +56,18 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 0.8rem;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.4rem;
         }
 
         .outputs-section {
             background: #1a1a1a;
-            padding: 1rem;
+            padding: 0.8rem 1rem;
             border-radius: 12px;
             border: 1px solid #333;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 0.8rem;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.4rem;
         }
 
         .input-group {
@@ -82,6 +81,7 @@
             grid-column: 1 / -1;
             max-width: 400px;
             margin: 0 auto;
+            text-align: center;
         }
 
         label {
@@ -135,7 +135,7 @@
 
         .time-btn {
             flex: 1;
-            padding: 0.6rem;
+            padding: 0.4rem;
             background: #222;
             border: 1px solid #444;
             color: #ccc;
@@ -143,6 +143,10 @@
             cursor: pointer;
             transition: all 0.2s;
             font-size: 0.9rem;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .time-btn:hover {
