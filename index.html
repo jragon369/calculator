@@ -278,8 +278,7 @@
                 <div class="input-group full-width">
                     <label for="timeframe">HORIZON (YEARS)</label>
                     <div class="time-selector">
-                        <button class="time-btn active" onclick="setTimeframe(1, this)">1</button>
-                        <button class="time-btn" onclick="setTimeframe(3, this)">3</button>
+                        <button class="time-btn active" onclick="setTimeframe(3, this)">3</button>
                         <button class="time-btn" onclick="setTimeframe(6, this)">6</button>
                         <button class="time-btn" onclick="setTimeframe(9, this)">9</button>
                     </div>
@@ -334,7 +333,7 @@
         let currentBTC = 60;
         let athletesPerMonth = 1000;
         let collectivesPerMonth = 1;
-        let timeframe = 1;
+        let timeframe = 3;
 
         // Format currency
         function formatCurrency(value) {
@@ -358,32 +357,38 @@
             }
         }
 
-        // Calculate athlete earnings with network effects and growth velocity
+        // Calculate athlete earnings with uniform network effects and sigmoid cap
         function calculateAthleteEarnings(totalAthletes, totalCollectives, timeInMonths) {
             const baseEarnings = 750; // Base $750/year
+            const maxEarnings = 75000; // Cap at $75k/year
             
             // Use the global variables directly for growth rates
             const monthlyAthleteGrowth = athletesPerMonth;
             const monthlyCollectiveGrowth = collectivesPerMonth;
             
+            // Uniform network effects - all set to 0.3
             // Factor 1: Network size effect (more athletes = more opportunities)
-            const athleteEffect = Math.pow(Math.max(totalAthletes / 1000, 1), 0.4);
+            const athleteEffect = Math.pow(Math.max(totalAthletes / 1000, 1), 0.3);
             
             // Factor 2: Collective growth effect (more collectives = more competition/prizes)
-            const collectiveEffect = Math.pow(Math.max(totalCollectives / 10, 1), 0.5);
+            const collectiveEffect = Math.pow(Math.max(totalCollectives / 10, 1), 0.3);
             
             // Factor 3: Time maturity effect (network matures over time)
-            const timeEffect = Math.pow(Math.max(timeInMonths / 12, 1), 0.5); // Increased from 0.3 to 0.5 for extended growth
+            const timeEffect = Math.pow(Math.max(timeInMonths / 12, 1), 0.3);
             
-            // Factor 4: Growth velocity effect - THIS IS THE KEY
-            // Velocity multiplier: faster growth = higher value
-            const athleteVelocity = Math.pow(Math.max(monthlyAthleteGrowth / 1000, 1), 0.35);
-            const collectiveVelocity = Math.pow(Math.max(monthlyCollectiveGrowth, 1), 0.4);
+            // Factor 4: Growth velocity effect - uniform impact
+            const athleteVelocity = Math.pow(Math.max(monthlyAthleteGrowth / 1000, 1), 0.3);
+            const collectiveVelocity = Math.pow(Math.max(monthlyCollectiveGrowth, 1), 0.3);
             
-            // Combined multiplier includes velocity
+            // Combined multiplier
             const combinedMultiplier = athleteEffect * collectiveEffect * timeEffect * athleteVelocity * collectiveVelocity;
             
-            return baseEarnings * Math.min(combinedMultiplier, 1000); // Cap at 1000x for stability
+            // Apply sigmoid function to cap earnings at $75k
+            const uncappedEarnings = baseEarnings * combinedMultiplier;
+            const growthFactor = (uncappedEarnings - baseEarnings) / (maxEarnings - baseEarnings);
+            const sigmoid = 1 / (1 + Math.exp(-3 * (growthFactor - 0.5))); // S-curve centered at 0.5
+            
+            return baseEarnings + (maxEarnings - baseEarnings) * sigmoid;
         }
 
         // Update display values
@@ -475,7 +480,7 @@
                     state.collectives.length,
                     month
                 );
-                const currentAvatarValue = currentAthleteEarnings * 2; // Avatar = 2x annual earnings
+                const currentAvatarValue = currentAthleteEarnings * 1.5; // Avatar = 1.5x annual earnings
 
                 // Launch new collectives this month
                 for (let i = 0; i < collectivesPerMonth; i++) {
@@ -516,13 +521,18 @@
                 // 15% of distributed KILO gets converted annually
                 const monthlyConversionRate = params.conversionRate / 12;
                 const kiloConvertedThisMonth = state.totalKiloSupply * monthlyConversionRate;
-                const btcPaidOut = (kiloConvertedThisMonth * params.kiloToSatoshi / params.satoshiPerBTC);
                 
-                // Network treasury pays out BTC for conversions
-                state.networkTreasuryBTC -= btcPaidOut;
+                // User gets 97% of BTC value, network keeps 3%
+                const totalBTCValue = (kiloConvertedThisMonth * params.kiloToSatoshi / params.satoshiPerBTC);
+                const btcPaidToUsers = totalBTCValue * 0.97; // 97% to users
+                const btcKeptByNetwork = totalBTCValue * 0.03; // 3% stays with network
                 
-                // 97% of converted KILO gets burned
-                const kiloBurnedFromConversions = kiloConvertedThisMonth * params.conversionBurnRate;
+                // Network treasury pays out 97% to users, keeps 3%
+                state.networkTreasuryBTC -= btcPaidToUsers;
+                // The 3% fee effectively stays in the treasury (no subtraction)
+                
+                // 100% of converted KILO gets burned (entire token destroyed)
+                const kiloBurnedFromConversions = kiloConvertedThisMonth;
                 
                 // Update network treasury (30% of revenue + BTC from avatar sales - conversion payouts)
                 state.networkTreasuryBTC += treasuryAdditionBTC;
