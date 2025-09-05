@@ -37,19 +37,6 @@
             margin-bottom: 1.5rem;
         }
 
-        h2 {
-            font-size: 1.2rem;
-            font-weight: normal;
-            margin-bottom: 0.1rem;
-            margin-top: 0.7rem;
-            color: #ffffff;
-            text-align: center;
-        }
-
-        h2.first-section {
-            margin-top: 0.8rem;
-        }
-
         .grid {
             display: flex;
             flex-direction: column;
@@ -59,17 +46,6 @@
         .inputs-section {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 0.8rem;
-            margin-bottom: 0.4rem;
-        }
-
-        .outputs-section {
-            background: #1a1a1a;
-            padding: 0.8rem 1rem;
-            border-radius: 12px;
-            border: 1px solid #333;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
             gap: 0.8rem;
             margin-bottom: 0.4rem;
         }
@@ -165,6 +141,41 @@
             border-color: #8B0000;
         }
 
+        /* Section titles - moderate size */
+        .section-title {
+            font-size: 1.1rem !important;
+            font-weight: normal !important;
+            margin-bottom: 0.5rem !important;
+            margin-top: 1rem !important;
+            color: #ffffff !important;
+            text-align: center !important;
+        }
+
+        .section-title.first-section {
+            margin-top: 1.2rem !important;
+        }
+
+        /* Desktop layout - three sections side by side */
+        .outputs-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .output-section {
+            background: #1a1a1a;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+
+        .output-items {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
         .output-item {
             text-align: center;
             border-right: 1px solid #333;
@@ -184,39 +195,10 @@
         }
 
         .output-value {
-            font-size: 1.1rem;
-            font-weight: bold;
+            font-size: 0.92rem;
+            font-weight: normal;
             color: #fff;
             margin-bottom: 0.2rem;
-        }
-
-        .assumptions-section {
-            background: #1a1a1a;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid #333;
-            margin-top: 1.5rem;
-        }
-
-        .assumptions-section h3 {
-            color: #8B0000;
-            font-size: 0.95rem;
-            margin-bottom: 0.8rem;
-            text-align: center;
-        }
-
-        .assumptions-section ul {
-            list-style: none;
-            padding: 0;
-            columns: 2;
-            column-gap: 2rem;
-        }
-
-        .assumptions-section li {
-            color: #aaa;
-            font-size: 0.65rem;
-            margin-bottom: 0.3rem;
-            break-inside: avoid;
         }
 
         @media (max-width: 768px) {
@@ -228,23 +210,27 @@
                 grid-template-columns: 1fr;
             }
 
+            /* Mobile layout - stack sections vertically */
             .outputs-container {
                 grid-template-columns: 1fr;
                 gap: 0.5rem;
             }
 
+            /* On mobile, keep items side by side with explicit styling */
+            .output-items {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+            }
+
             .output-item {
-                border-right: none;
-                border-bottom: 1px solid #333;
-                padding: 0.5rem 0;
+                text-align: center;
+                border-right: 1px solid #333;
+                padding: 0 0.5rem;
             }
 
             .output-item:last-child {
-                border-bottom: none;
-            }
-
-            .assumptions-section ul {
-                columns: 1;
+                border-right: none;
             }
         }
     </style>
@@ -288,47 +274,56 @@
                     </div>
                 </div>
 
-                <h2 class="first-section">AVATAR</h2>
-                <div class="outputs-section">
-                    <div class="output-item">
-                        <div class="output-label">KILO Per Win</div>
-                        <div class="output-value" id="kiloOutput">50</div>
+                <div class="outputs-container">
+                    <div>
+                        <div class="section-title first-section">AVATAR</div>
+                        <div class="output-section">
+                            <div class="output-items">
+                                <div class="output-item">
+                                    <div class="output-label">KILO Per Win</div>
+                                    <div class="output-value" id="kiloOutput">50</div>
+                                </div>
+                                <div class="output-item">
+                                    <div class="output-label">Avatar Value</div>
+                                    <div class="output-value" id="avatarValue">$1.5K</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="output-item">
-                        <div class="output-label">Avatar Value</div>
-                        <div class="output-value" id="avatarValue">$1.5K</div>
-                    </div>
-                </div>
-
-                <h2>COLLECTIVE</h2>
-                <div class="outputs-section">
-                    <div class="output-item">
-                        <div class="output-label">Treasury (BTC)</div>
-                        <div class="output-value" id="treasuryOutput">120 BTC</div>
-                    </div>
-
-                    <div class="output-item">
-                        <div class="output-label">Annual Revenue</div>
-                        <div class="output-value" id="collectiveRevenueOutput">$750K</div>
-                    </div>
-                </div>
-
-                <h2>NETWORK</h2>
-                <div class="outputs-section">
-                    <div class="output-item">
-                        <div class="output-label">Treasury (BTC)</div>
-                        <div class="output-value" id="networkTreasuryOutput">150 BTC</div>
+                    <div>
+                        <div class="section-title">COLLECTIVE</div>
+                        <div class="output-section">
+                            <div class="output-items">
+                                <div class="output-item">
+                                    <div class="output-label">Treasury (BTC)</div>
+                                    <div class="output-value" id="treasuryOutput">120 BTC</div>
+                                </div>
+                                <div class="output-item">
+                                    <div class="output-label">Annual Revenue</div>
+                                    <div class="output-value" id="collectiveRevenueOutput">$750K</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="output-item">
-                        <div class="output-label">Annual Revenue</div>
-                        <div class="output-value" id="networkRevenue">$4.3M</div>
+                    <div>
+                        <div class="section-title">NETWORK</div>
+                        <div class="output-section">
+                            <div class="output-items">
+                                <div class="output-item">
+                                    <div class="output-label">Treasury (BTC)</div>
+                                    <div class="output-value" id="networkTreasuryOutput">150 BTC</div>
+                                </div>
+                                <div class="output-item">
+                                    <div class="output-label">Annual Revenue</div>
+                                    <div class="output-value" id="networkRevenue">$4.3M</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 
